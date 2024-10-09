@@ -1,0 +1,20 @@
+services:
+  test:
+    build: .
+    ports:
+      - "8080:80"
+    develop:
+      watch:
+        - action: sync+restart
+          path: .
+          target: /poopoo
+          ignore:
+            - Dockerfile
+            - requirements.txt
+            - package_json.yaml
+        - action: rebuild
+          path: Dockerfile
+        - action: rebuild
+          path: requirements.txt
+        - action: rebuild
+          path: package_json.yaml

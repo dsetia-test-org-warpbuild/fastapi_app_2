@@ -1,0 +1,5 @@
+github_actions: true
+secret:
+  - test1
+  - test3
+env: dsetia

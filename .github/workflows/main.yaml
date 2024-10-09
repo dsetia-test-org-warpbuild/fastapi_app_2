@@ -1,0 +1,38 @@
+name: Test Action
+on: 
+  push
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  test_job:
+    runs-on: ubuntu-latest
+    name: Test Github Action
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          path: fastapi_app
+      - name: AWS Configure
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: us-east-1
+          role-to-assume: arn:aws:iam::089962644720:role/github_user
+      - name: deploy test
+        id: deploy_test
+        uses: dsetia-test-org-warpbuild/github-action-2@master
+        with:
+          token: ${{ secrets.TENSORKUBE_TOKEN }}
+          session_id: ${{ secrets.TENSORKUBE_SESSION_ID }}
+          path: fastapi_app
+          # min_scale: 3
+          # max_scale: 3
+          # env: dev
+          cpu: 10000
+          # secrets: |
+          #   test1
+          #   test2
+          # memory: 15000
+
